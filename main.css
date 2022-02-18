@@ -1,0 +1,53 @@
+/* grid-wrapper {
+    display: grid;  Задаем грид раскладку для контейнера свойством display.
+    grid-template-columns: 200px 200px; Есть множество способов создать сетку. Один из них — указать размеры и количество колонок и рядов. Здесь мы два раза через пробел повторяем значение 200 пикселей. Значит у нас будут две колонки шириной 200px. 
+     grid-template-rows: 100px 100px 100px;   То же самое с рядами. Только рядов у нас три по 100 пикселей 
+    grid-template-columns:repeat(2, 200px);              Не обязательно записывать каждую колонку и ряд вручную. Можно использовать функцию repeat() для повтора одинаковых колонок/рядов 
+    grid-template-rows: repeat(3, 100px);      
+} */
+
+/* .grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-template-rows: auto;
+} */
+
+/* Чтобы содержимое выглядело хорошо на любой ширине экрана, а также заполняло все доступное место, используем функцию minmax(). Как можно догадаться из названия, она указывает минимальный и максимальный размер. Минимальным будет фиксированный в 200 пикселей, а максимальным 1fr, то есть столько, сколько есть свободного места. При этом колонки станут одинаковыми по ширине */
+/* .grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: auto;
+} */
+
+/* добавим отступы между ячейками свойством grid-gap. В реальности это полезно, чтобы содержимое (скажем, картинки) не сливались. Используем относительные единицы vw (процент ширины вьюпорта */
+.grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: auto;
+    grid-gap: 2vw;    
+}
+
+.grid-item {
+    min-height: 100px;
+}
+
+.item-1 {
+    background-color: rgb(161, 48, 48);
+}
+
+.item-2 {
+    background-color: rgb(49, 163, 68);
+}
+
+.item-3 {
+    background-color: rgb(34, 32, 180);
+}
+
+.item-4 {
+    background-color: rgb(207, 219, 29);
+}
+
+.item-5 {
+    background-color: rgb(175, 52, 165);
+}
+
