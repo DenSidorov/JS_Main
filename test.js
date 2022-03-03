@@ -64,22 +64,22 @@
 
 // console.log(allBank);  // 9500
 
-const person = {
-    name: 'Den',
-    age: 40,
-    isProgrammer: true,
-    languages: ['ru', 'en', 'ua'],
-    'hard key': 'Hard value',
-    ['key_' + (1 + 3)]: 'sum key',     // key_4
-    greet() {console.log(`Hi from ${this.name}`);},
-}
+// const person = {
+//     name: 'Den',
+//     age: 40,
+//     isProgrammer: true,
+//     languages: ['ru', 'en', 'ua'],
+//     'hard key': 'Hard value',
+//     ['key_' + (1 + 3)]: 'sum key',     // key_4
+//     greet() {console.log(`Hi from ${this.name}`);},
+// }
 
-const max = Object.create(person)
-max.name = 'Max'
-max.age = 14
+// const max = Object.create(person)
+// max.name = 'Max'
+// max.age = 14
 
 
-console.log(max);
+//console.log(max);
 // console.log(person['age']);
 // console.log(person['hard key']);
 // console.log(person['key_4']);
@@ -207,6 +207,166 @@ app.js:121 "greet": greet() {console.log(`Hi from ${this.name}`);}
 //     }
 // })
 
+// ЗАМЫКАНИЯ (функция в функции)
+
+// function urlGenerator(domain) {
+//     return function(url) {
+//         return `https://${url}.${domain}`
+//     }
+// }
+// так как urlGenerator возвращает ф-цию, то результат заносим в переменную
+// const comUrl = urlGenerator('com')
+// console.log(comUrl('google'));
+// https://google.com
+// const ruUrl = urlGenerator('ru')
+// console.log(ruUrl('yandex'));
+// https://yandex.ru
+
+/* Задача: Написать свою ф-цию baind */
+
+// function logPerson() {
+//     console.log(`Person ${this.name}, ${this.age}, ${this.job}`);
+// }
+
+// const person1 = {name: 'Den', age: 40, job: 'Programmer'}
+// const person2 = {name: 'Max', age: 14, job: 'student'}
 
 
+// Решение
+// function bind(context, fn) {
+//     return function(...args) {
+//         fn.apply(context, args)
+//     }
+// }
+
+// bind(person1, logPerson)()
+// bind(person2, logPerson)()
+
+
+/* Объекты */
+
+// const person = Object.create({}, {
+//     name: {
+//         value: 'Den',
+//         enumerable: true,  // PropertyDescriptor параметр
+//         writable: true,  // поле можно менять
+//         configurable: true  // позволяет удалять ключь из оюъекта
+//     },
+//     year: {
+//         value: 1981,
+//         enumerable: false,  // false по-умолчанию (не покажет через for)
+//     },
+//     age: {   //  геттеры и сеттеры
+//         get() {
+//             return new Date().getFullYear() - this.year
+//         },
+//         set() {
+//             document.body.style.background = 'red'
+//         }
+//     }
+// })
+// look at the key:
+// for (let key in person) {
+//     console.log('Key', key, person[key]);
+// }
+
+/* Классы */
+class Animal {
+    static type = 'ANIMAL'
+
+    constructor(options) {
+        this.name = options.name
+        this.age = options.age
+        this.hasTail = options.hasTail
+    }
+
+    voice() {
+        console.log('Gav - Gav');
+    }
+}
+
+const animal = new Animal({
+    name: 'Animal',
+    age: 5,
+    hasTail: true
+})
+
+class Cat extends Animal {
+    static type = 'CAT'
+
+    constructor (options) {
+        // Чтобы в дочернем классе добавлять свои свойства надо вызвать через super() свойства родителя
+        super(options)
+        this.color = options.color
+    }
+
+    voice() {
+        super.voice() // Если надо, чтобы остался родительский метод
+        console.log('Myau - Myau');
+    }
+    // Геттеры и сеттеры
+    get ageInfo() {
+        return this.age * 7 // cat.ageInfo - получим возраст
+    }
+
+    set ageInfo(newAge) {
+        this.age = newAge // cat.ageInfo = 8 - новый возраст
+    }
+}
+
+const cat = new Cat({
+    name: 'Cat',
+    age: 7,
+    hasTail: true,
+    color: 'black'
+})
+class Component {
+    constructor(selector) {
+        this.$el = document.querySelector(selector) //через $ объявляют переменные, которые содержат ноду
+    }
+
+    hide() {
+        this.$el.style.display = 'none'
+    }
+
+    show(){
+        this.$el.style.display = 'block'
+    }
+}
+
+class Box extends Component {
+    constructor(options) {
+        super(options.selector)
+
+        this.$el.style.width = this.$el.style.height = options.size + 'px'
+        this.$el.style.background = options.color
+        
+    }
+}
+
+const box1 = new Box({
+    selector: '#box1',
+    size: 100,
+    color: 'red'
+})
+
+const box2 = new Box({
+    selector: '#box2',
+    size: 120,
+    color: 'blue'
+})
+
+class Circle extends Box {
+    constructor(options) {
+        super(options)
+
+        this.$el.style.borderRadius = '50%'
+    }
+}
+
+const circle = new Circle({
+    selector: '#circle',
+    size: 90,
+    color: 'green'
+})
 
